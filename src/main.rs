@@ -1,6 +1,6 @@
-use rocket::{launch, put, routes};
+use rocket::*;
 
-#[put("/run", data = "<functions>")]
+#[post("/run", data = "<functions>")]
 fn run(functions: String) -> String {
     match nast::run(functions.as_str()) {
         Ok(v) => format!("{v:?}"),
