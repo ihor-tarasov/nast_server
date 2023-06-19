@@ -8,7 +8,15 @@ fn run(functions: String) -> String {
     }
 }
 
+#[post("/info", data = "<functions>")]
+fn info(functions: String) -> String {
+    match nast::get_info(functions.as_str()) {
+        Ok(result) => result,
+        Err(e) => format!("Error: {e}"),
+    }
+}
+
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![run])
+    rocket::build().mount("/", routes![run, info])
 }
